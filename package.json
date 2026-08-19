@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "sh scripts/dev.sh dev -p 3010",
+    "build": "sh scripts/dev.sh build",
+    "start": "sh scripts/dev.sh start",
     "lint": "eslint"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
     "next": "16.3.1",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
