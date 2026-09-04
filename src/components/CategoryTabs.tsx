@@ -7,9 +7,10 @@ import StrategyTab from "./StrategyTab";
 import VisualTab from "./VisualTab";
 import ArgumentaireTab from "./ArgumentaireTab";
 import VisitSheetTab from "./VisitSheetTab";
+import OurAiTab from "./OurAiTab";
 import type { AnalysisResult } from "@/lib/types";
 
-type Category = "description" | "strategie" | "visuel" | "argumentaire" | "fiche";
+type Category = "description" | "strategie" | "visuel" | "argumentaire" | "fiche" | "notreIA";
 
 const CATEGORIES: { key: Category; label: string }[] = [
   { key: "description", label: "Description" },
@@ -17,6 +18,7 @@ const CATEGORIES: { key: Category; label: string }[] = [
   { key: "visuel", label: "Visuel" },
   { key: "argumentaire", label: "Argumentaire" },
   { key: "fiche", label: "Fiche de visite" },
+  { key: "notreIA", label: "Notre IA" },
 ];
 
 export default function CategoryTabs({ result }: { result: AnalysisResult }) {
@@ -57,6 +59,7 @@ export default function CategoryTabs({ result }: { result: AnalysisResult }) {
         />
       )}
       {active === "fiche" && <VisitSheetTab result={result} />}
+      {active === "notreIA" && <OurAiTab />}
     </div>
   );
 }

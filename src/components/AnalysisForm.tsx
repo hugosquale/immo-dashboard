@@ -175,6 +175,16 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
     setDetails((prev) => ({ ...prev, [key]: value }));
   }
 
+  function handleReset() {
+    setCity("");
+    setShowSuggestions(false);
+    setPropertyType("appartement");
+    setSurface("");
+    setUserPrice("");
+    setTouched(false);
+    setDetails(initialDetails);
+  }
+
   const counts = {
     localisation: [details.neighborhood, details.postalCode].filter(isSet).length,
     surfaces: [details.landSurface, details.totalRooms, details.bedrooms, details.hasBonusRoom].filter(isSet).length,
@@ -451,20 +461,30 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
         </AccordionSection>
       </div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-[var(--accent-blue)] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {isLoading ? (
-          <>
-            <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-            Analyse en cours…
-          </>
-        ) : (
-          "Analyser"
-        )}
-      </button>
+      <div className="mt-2 flex gap-2">
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[var(--accent-blue)] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isLoading ? (
+            <>
+              <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              Analyse en cours…
+            </>
+          ) : (
+            "Analyser"
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={handleReset}
+          disabled={isLoading}
+          className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm font-semibold text-[var(--muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Réinitialiser
+        </button>
+      </div>
       {error && <p className="text-center text-xs text-[var(--danger)]">{error}</p>}
     </form>
   );
