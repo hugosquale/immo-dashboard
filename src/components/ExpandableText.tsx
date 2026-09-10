@@ -27,7 +27,7 @@ export default function ExpandableText({ children, className = "" }: ExpandableT
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="mt-3 w-full rounded-lg bg-[var(--accent-blue)] py-3 text-sm font-semibold text-white transition hover:brightness-110"
+          className="btn-primary mt-3 w-full rounded-lg py-3 text-sm font-semibold"
         >
           {expanded ? "Voir moins" : "Voir plus"}
         </button>

@@ -1,84 +1,37 @@
 export default function LoadingModal({ streamedContent }: { streamedContent: string }) {
   return (
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      zIndex: 50,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.7)",
-      backdropFilter: "blur(4px)"
-    }}>
-      <div style={{
-        width: "100%",
-        maxWidth: "400px",
-        borderRadius: "24px",
-        backgroundColor: "#1a1d25",
-        padding: "32px",
-        boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)"
-      }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px" }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              animation: "spin 1s linear infinite",
-              borderRadius: "50%",
-              border: "4px solid #2a2d35",
-              borderTopColor: "#2563eb"
-            }} />
-            <h2 style={{ fontSize: "18px", fontWeight: "600", color: "#e8ebf2" }}>Analyse en cours</h2>
-            <p style={{ fontSize: "12px", color: "#8a8d99" }}>La machine réfléchit...</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm">
+      <div className="animate-fade-in-up w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--card-shadow-hover)]">
+        <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-3">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-[var(--surface-2)] border-t-[var(--accent-blue)]" />
+            <h2 className="text-lg font-semibold text-[var(--foreground)]">Analyse en cours</h2>
+            <p className="text-xs text-[var(--muted)]">La machine réfléchit…</p>
           </div>
 
           {streamedContent && (
-            <div style={{
-              maxHeight: "192px",
-              width: "100%",
-              overflowY: "auto",
-              borderRadius: "8px",
-              backgroundColor: "#252a35",
-              padding: "16px"
-            }}>
-              <p style={{ fontSize: "14px", lineHeight: "1.5", color: "#e8ebf2" }}>
+            <div className="max-h-48 w-full overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <p className="text-sm leading-relaxed text-[var(--foreground)]">
                 {streamedContent}
-                <span style={{ animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite", color: "#2563eb" }}>▊</span>
+                <span className="ml-0.5 animate-pulse text-[var(--accent-blue)]">▊</span>
               </p>
             </div>
           )}
 
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="flex items-center gap-2">
             {[0, 150, 300].map((delay) => (
               <div
                 key={delay}
+                className="h-2 w-2 animate-bounce rounded-full"
                 style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor: delay % 2 === 0 ? "#10b981" : "#2563eb",
-                  animation: `bounce 1.4s infinite`,
-                  animationDelay: `${delay}ms`
+                  background: delay === 150 ? "var(--accent-green)" : "var(--accent-blue)",
+                  animationDelay: `${delay}ms`,
                 }}
               />
             ))}
           </div>
         </div>
       </div>
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes bounce {
-          0%, 80%, 100% { opacity: 1; }
-          40% { opacity: 0.5; }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-      `}</style>
     </div>
   );
 }

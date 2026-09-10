@@ -465,7 +465,7 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
         <button
           type="submit"
           disabled={isLoading}
-          className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[var(--accent-blue)] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+          className="btn-primary flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold"
         >
           {isLoading ? (
             <>
@@ -480,7 +480,7 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
           type="button"
           onClick={handleReset}
           disabled={isLoading}
-          className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm font-semibold text-[var(--muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="btn-ghost rounded-lg px-4 py-3 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           Réinitialiser
         </button>

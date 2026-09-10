@@ -1,7 +1,6 @@
 import Card from "./Card";
 import RadialScore from "./RadialScore";
 import LinearGauge from "./LinearGauge";
-import BeforeAfterCard from "./BeforeAfterCard";
 import type { AnalysisResult } from "@/lib/types";
 
 export default function KpiSidebar({ result }: { result: AnalysisResult }) {
@@ -19,8 +18,6 @@ export default function KpiSidebar({ result }: { result: AnalysisResult }) {
           <LinearGauge value={result.marketTension} lowLabel="Détendu" midLabel="Équilibré" highLabel="Tendu" />
         </div>
       </Card>
-
-      <BeforeAfterCard attractivityScore={result.attractivityScore} marketTension={result.marketTension} />
     </div>
   );
 }

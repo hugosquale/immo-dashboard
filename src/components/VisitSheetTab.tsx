@@ -53,7 +53,7 @@ export default function VisitSheetTab({ result }: { result: AnalysisResult }) {
         <button
           type="button"
           onClick={() => window.print()}
-          className="rounded-lg bg-[var(--accent-blue)] px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+          className="btn-primary rounded-lg px-4 py-2.5 text-sm font-semibold"
         >
           Imprimer la fiche
         </button>

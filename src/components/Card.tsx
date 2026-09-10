@@ -11,7 +11,7 @@ interface CardProps {
 export default function Card({ children, className = "", title, subtitle, action }: CardProps) {
   return (
     <div
-      className={`rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--card-shadow)] ${className}`}
+      className={`card-lift rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--card-shadow)] ${className}`}
     >
       {(title || action) && (
         <div className="flex items-start justify-between gap-3 px-5 pt-5">
