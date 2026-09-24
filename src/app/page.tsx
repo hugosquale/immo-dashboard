@@ -5,15 +5,26 @@ import AnalysisForm from "@/components/AnalysisForm";
 import CategoryTabs from "@/components/CategoryTabs";
 import LoadingModal from "@/components/LoadingModal";
 import SkeletonCategories from "@/components/SkeletonCategories";
+import SellersPanel from "@/components/SellersPanel";
+import BuyersPanel from "@/components/BuyersPanel";
 import { getCachedAnalysis, setCachedAnalysis } from "@/lib/cache";
 import { EXAMPLE_INPUT, EXAMPLE_RESULT } from "@/lib/exampleResult";
 import type { AnalysisInput, AnalysisResult } from "@/lib/types";
+
+type Volet = "vendeurs" | "acheteurs" | "analyse";
+
+const VOLETS: { key: Volet; label: string }[] = [
+  { key: "vendeurs", label: "Chers vendeurs" },
+  { key: "acheteurs", label: "Chers acheteurs" },
+  { key: "analyse", label: "Analyse avancée" },
+];
 
 export default function Home() {
   const [result, setResult] = useState<AnalysisResult | null>(EXAMPLE_RESULT);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [streamedContent, setStreamedContent] = useState("");
+  const [volet, setVolet] = useState<Volet>("vendeurs");
 
   async function handleAnalyze(input: AnalysisInput) {
     setError(null);
@@ -86,34 +97,71 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col lg:flex-row">
-      <div
-        aria-hidden
-        className="fixed inset-0 -z-10 bg-[url('/bg-squale.jpg')] bg-cover bg-center bg-no-repeat"
-      />
+    <div
+      className={`flex w-full flex-col ${
+        volet === "analyse" ? "min-h-screen" : "h-screen overflow-hidden"
+      }`}
+    >
+      {volet === "analyse" ? (
+        <div
+          aria-hidden
+          className="fixed inset-0 -z-10 bg-[url('/bg-squale.jpg')] bg-cover bg-center bg-no-repeat"
+        />
+      ) : (
+        <div aria-hidden className="fixed inset-0 -z-10 bg-white" />
+      )}
 
-      <main className="order-2 min-w-0 flex-1 p-6 lg:order-1 lg:p-8">
-        <div className="mx-auto w-full max-w-4xl">
-          <div className="animate-fade-in-up mb-6 flex justify-center">
-            <img src="/logonoir.png" alt="Squale AI" className="h-6 w-auto" />
-          </div>
-          {isLoading && (
-            <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-center">
-              <div className="flex items-center justify-center gap-3">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent-blue)]" />
-                <p className="text-sm font-medium text-[var(--foreground)]">Analyse en cours… la machine réfléchit</p>
-              </div>
-            </div>
-          )}
-          <div className="animate-fade-in-up rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--card-shadow)] sm:p-8">
-            {isLoading ? <SkeletonCategories /> : result && <CategoryTabs result={result} />}
-          </div>
+      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--surface)]/85 backdrop-blur-xl">
+        <div className="flex h-16 items-center gap-6 px-5 sm:px-8">
+          <nav className="flex min-w-0 flex-1 gap-1 overflow-x-auto">
+            {VOLETS.map((v) => (
+              <button
+                key={v.key}
+                type="button"
+                onClick={() => setVolet(v.key)}
+                className={`shrink-0 rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                  volet === v.key
+                    ? "btn-primary"
+                    : "border-transparent text-[var(--muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                {v.label}
+              </button>
+            ))}
+          </nav>
         </div>
-      </main>
+      </header>
 
-      <aside className="order-1 w-full shrink-0 border-b border-[var(--border)] bg-[var(--surface)] lg:order-2 lg:sticky lg:top-0 lg:h-screen lg:w-full lg:max-w-[360px] lg:overflow-y-auto lg:border-b-0 lg:border-l">
-        <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} initialInput={EXAMPLE_INPUT} error={error} />
-      </aside>
+      <div key={volet} className="animate-fade-in-up flex min-h-0 flex-1 flex-col">
+        {volet === "vendeurs" && <SellersPanel />}
+        {volet === "acheteurs" && <BuyersPanel />}
+
+        {volet === "analyse" && (
+          <div className="flex flex-1 flex-col lg:flex-row">
+            <main className="order-2 min-w-0 flex-1 p-6 lg:order-1 lg:p-8">
+              <div className="mx-auto w-full max-w-4xl">
+                {isLoading && (
+                  <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-center">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent-blue)]" />
+                      <p className="text-sm font-medium text-[var(--foreground)]">
+                        Analyse en cours… la machine réfléchit
+                      </p>
+                    </div>
+                  </div>
+                )}
+                <div className="animate-fade-in-up rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--card-shadow)] sm:p-8">
+                  {isLoading ? <SkeletonCategories /> : result && <CategoryTabs result={result} />}
+                </div>
+              </div>
+            </main>
+
+            <aside className="order-1 w-full shrink-0 border-b border-[var(--border)] bg-[var(--surface)] lg:order-2 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:w-full lg:max-w-[360px] lg:overflow-y-auto lg:border-b-0 lg:border-l">
+              <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} initialInput={EXAMPLE_INPUT} error={error} />
+            </aside>
+          </div>
+        )}
+      </div>
 
       {isLoading && <LoadingModal streamedContent={streamedContent} />}
     </div>
