@@ -52,7 +52,7 @@ export default function LoginGate() {
                 id="prenom"
                 autoComplete="given-name"
                 autoFocus
-                placeholder="Ex : Hugo"
+                placeholder="Ex : Michel"
                 value={prenom}
                 onChange={(e) => setPrenom(e.target.value)}
                 className={champ}
@@ -66,7 +66,7 @@ export default function LoginGate() {
               <input
                 id="nom"
                 autoComplete="family-name"
-                placeholder="Ex : Venant"
+                placeholder="Ex : Dupont"
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
                 className={champ}

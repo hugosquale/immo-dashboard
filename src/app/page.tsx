@@ -11,6 +11,7 @@ import RecoPage from "@/components/RecoPage";
 import { FICHES } from "@/lib/recommandations";
 import SuiviProvider, { useSuivi } from "@/components/SuiviProvider";
 import LoginGate from "@/components/LoginGate";
+import AdminPanel from "@/components/AdminPanel";
 import { getCachedAnalysis, setCachedAnalysis } from "@/lib/cache";
 import { EXAMPLE_INPUT, EXAMPLE_RESULT } from "@/lib/exampleResult";
 import type { AnalysisInput, AnalysisResult } from "@/lib/types";
@@ -190,6 +191,7 @@ function Application() {
             >
               Changer
             </button>
+            <AdminPanel />
           </div>
         </div>
       </header>

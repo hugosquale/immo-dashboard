@@ -95,9 +95,19 @@ async function appel(chemin: string, init?: RequestInit): Promise<Response> {
 }
 
 export async function lire(plage: string): Promise<string[][]> {
-  const r = await appel(`/values/${encodeURIComponent(plage)}`);
-  const data = (await r.json()) as { values?: string[][] };
-  return data.values ?? [];
+  try {
+    const r = await appel(`/values/${encodeURIComponent(plage)}`);
+    const data = (await r.json()) as { values?: string[][] };
+    return data.values ?? [];
+  } catch (error) {
+    // une plage comme "A2:Z" dépasse les limites de la grille quand l'onglet
+    // ne contient encore que sa ligne d'en-tête (aucune donnée à lire) :
+    // c'est un onglet vide, pas une erreur.
+    if (error instanceof Error && error.message.includes("exceeds grid limits")) {
+      return [];
+    }
+    throw error;
+  }
 }
 
 export async function ajouterLigne(onglet: string, valeurs: (string | number)[]): Promise<void> {

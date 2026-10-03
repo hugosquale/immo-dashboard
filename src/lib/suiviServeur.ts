@@ -185,5 +185,17 @@ export async function progresser(cle: string, page: string, pourcentage: number)
   return u;
 }
 
-export { PAGES, ENTETES };
+/** Liste tous les clients connus, pour le panneau d'administration. */
+export async function listerUtilisateurs(): Promise<{
+  utilisateurs: Utilisateur[];
+  source: "sheets" | "memoire";
+}> {
+  const tous = await charger();
+  return {
+    utilisateurs: [...tous.values()].map(({ u }) => u),
+    source: sheetsConfigure() ? "sheets" : "memoire",
+  };
+}
+
+export { PAGES, ENTETES, TITRES, toutesLues };
 export const archivageActif = sheetsConfigure;
