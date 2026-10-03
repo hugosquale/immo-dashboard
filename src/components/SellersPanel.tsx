@@ -1,5 +1,5 @@
 import FlowDiagram, { type Step } from "./FlowDiagram";
-import { RobotIcon, WhatsAppIcon, HouseHeartIcon, EyeIcon } from "./StepIcons";
+import { AiChipIcon, WhatsAppIcon, HouseHeartIcon, EyeIcon } from "./StepIcons";
 import {
   ScanIllustration,
   NotifIllustration,
@@ -14,7 +14,7 @@ const STEPS: Step[] = [
     grad: "nodeBlue",
     title: "Elle trouve les gens qui veulent acheter dans la zone.",
     body: "Notre IA les repère grâce à ce qu'ils font en ligne, en croisant plus de 2 000 données (recherches, comportement…).",
-    icon: RobotIcon,
+    icon: AiChipIcon,
     badges: { kind: "social" },
     illustration: <ScanIllustration />,
   },

@@ -4,35 +4,51 @@ import type { ReactNode } from "react";
    Volontairement détaillées (dégradés, pastilles, reflets) plutôt que de
    simples traits, pour l'aspect « nœud d'agent » façon n8n. */
 
-/** Tête de robot : l'agent IA qui part chercher les acheteurs. */
-export const RobotIcon: ReactNode = (
+/** Puce « AI » avec ses pistes de circuit : l'agent qui part chercher. */
+export const AiChipIcon: ReactNode = (
   <>
-    {/* antenne */}
-    <path d="M12 2.6v2.1" stroke="#0055b4" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="12" cy="1.7" r="1.2" fill="#00d0ff" />
-    {/* oreilles */}
-    <rect x="1.5" y="9.2" width="2.3" height="5.2" rx="1.15" fill="#0055b4" />
-    <rect x="20.2" y="9.2" width="2.3" height="5.2" rx="1.15" fill="#0055b4" />
-    {/* tête */}
-    <rect x="4" y="4.7" width="16" height="13.8" rx="4.6" fill="url(#robotGrad)" />
-    {/* visière */}
-    <rect x="6.2" y="7.6" width="11.6" height="5.6" rx="2.8" fill="#04264d" opacity="0.55" />
-    {/* yeux */}
-    <circle cx="9.2" cy="10.4" r="1.5" fill="#7df0ff" />
-    <circle cx="14.8" cy="10.4" r="1.5" fill="#7df0ff" />
-    <circle cx="9.6" cy="9.9" r="0.45" fill="#ffffff" />
-    <circle cx="15.2" cy="9.9" r="0.45" fill="#ffffff" />
-    {/* grille de bouche */}
-    <rect x="8.6" y="14.6" width="6.8" height="2.1" rx="1.05" fill="#ffffff" opacity="0.75" />
-    <path d="M10.7 14.6v2.1M13.3 14.6v2.1" stroke="#0071e3" strokeWidth="0.55" opacity="0.6" />
-    {/* buste */}
-    <path
-      d="M8.4 18.5v1.1a3.6 3.6 0 0 0 7.2 0v-1.1"
-      stroke="#0055b4"
-      strokeWidth="1.5"
-      fill="none"
-      strokeLinecap="round"
-    />
+    {/* pistes, tracées avant la puce pour passer dessous */}
+    <g stroke="url(#chipGrad)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.6 7V3h-3.3" />
+      <path d="M13.9 7V3h2.5" />
+      <path d="M7 10.6H2.6V7.5" />
+      <path d="M7 13.5H2.6v2.4" />
+      <path d="M17 10.6h4.4V7.5" />
+      <path d="M17 13.5h4.4v2.4" />
+      <path d="M10.6 17v4h-3.3" />
+      <path d="M13.9 17v4h2.5" />
+    </g>
+
+    {/* nœuds au bout des pistes */}
+    <g fill="url(#chipGrad)">
+      {[
+        [7.3, 3],
+        [16.4, 3],
+        [2.6, 7.5],
+        [21.4, 7.5],
+        [2.6, 15.9],
+        [21.4, 15.9],
+        [7.3, 21],
+        [16.4, 21],
+      ].map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="1.85" />
+      ))}
+    </g>
+
+    {/* corps de la puce */}
+    <rect x="7" y="7" width="10" height="10" rx="2.6" fill="url(#chipGrad)" />
+    <text
+      x="12"
+      y="12"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize="5.4"
+      fontWeight="700"
+      fill="#ffffff"
+      letterSpacing="0.2"
+    >
+      AI
+    </text>
   </>
 );
 
@@ -86,7 +102,7 @@ export const EyeIcon: ReactNode = (
 /** Dégradés utilisés par les icônes, à inclure une fois dans les <defs> du SVG. */
 export const IconGradients: ReactNode = (
   <>
-    <linearGradient id="robotGrad" x1="0" y1="0" x2="0.6" y2="1">
+    <linearGradient id="chipGrad" x1="0" y1="0" x2="0.6" y2="1">
       <stop offset="0%" stopColor="#4aa6ff" />
       <stop offset="60%" stopColor="#0071e3" />
       <stop offset="100%" stopColor="#0050ab" />
