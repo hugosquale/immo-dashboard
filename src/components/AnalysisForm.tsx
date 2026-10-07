@@ -467,7 +467,7 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="additionalInfo" className="text-xs font-medium text-[var(--muted)]">
-          Informations complémentaires à rajouter aux besoins (Ceci apparaîtra au deuxième paragraphe)
+          Informations complémentaires à rajouter aux besoins (Ceci apparaîtra juste avant « Équipements et annexes » sur la description Web, et sur Instagram, TikTok et Facebook)
         </label>
         <textarea
           id="additionalInfo"

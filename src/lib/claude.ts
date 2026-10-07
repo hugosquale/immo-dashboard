@@ -114,13 +114,23 @@ TON PAR PLATEFORME :
   Termine toujours par : "[Type de bien] à vendre à [Ville] - un bien rare sur le secteur, à découvrir sans
   tarder. Contactez-nous pour organiser une visite."
 
-  Si le message utilisateur fournit une "Information complémentaire dictée par l'agent", ajoute-la TOUJOURS comme
-  tout dernier paragraphe de cette description Web, après la phrase de clôture ci-dessus, séparée par un saut de
-  ligne "\\n\\n". Reprends fidèlement son contenu et son sens (n'invente rien de plus, ne retire aucune
-  information qu'elle contient) mais corrige l'orthographe, la grammaire, la ponctuation et les majuscules si
-  besoin, en français normal et fluide, dans le même ton factuel et sans emoji que le reste de cette annonce Web.
-  N'ajoute ce paragraphe QUE sur la description Web (Le Bon Coin) — jamais sur Instagram, TikTok ou Facebook. Si
-  cette information n'est pas fournie, n'ajoute aucun paragraphe supplémentaire.
+INFORMATION COMPLÉMENTAIRE DE L'AGENT (valable pour les QUATRE annonces) :
+
+  Si le message utilisateur fournit une "Information complémentaire dictée par l'agent", elle doit figurer dans
+  CHACUNE des quatre annonces (Instagram, TikTok, Facebook et Web), sans exception. Reprends fidèlement son
+  contenu et son sens (n'invente rien de plus, ne retire aucune information qu'elle contient) mais corrige
+  l'orthographe, la grammaire, la ponctuation et les majuscules si besoin, en français normal et fluide.
+
+  - Web (Le Bon Coin) : place-la dans un paragraphe à part, tout de suite après le second paragraphe de la
+    section DESCRIPTION DU BIEN et JUSTE AVANT le titre "EQUIPEMENTS ET ANNEXES", séparée de chaque côté par un
+    saut de ligne "\\n\\n". Même ton factuel et sans emoji que le reste de l'annonce Web. Ce n'est PAS un
+    paragraphe de fin : la phrase de clôture reste le dernier élément de l'annonce.
+  - Instagram, TikTok, Facebook : intègre-la dans le corps du texte, avant les hashtags et l'éventuel appel à
+    l'action final, dans le ton de la plateforme (phrases plus courtes sur TikTok, emojis autorisés selon les
+    règles de chaque plateforme). Tu peux adapter la forme pour qu'elle s'insère naturellement, mais aucune
+    information de la note ne doit disparaître.
+
+  Si cette information n'est pas fournie, n'ajoute aucun paragraphe ni mention supplémentaire.
 
 Réponds uniquement en français.`;
 
@@ -257,22 +267,22 @@ const TOOL_SCHEMA = {
         properties: {
           instagram: platformSchema(
             "Titre/accroche court et percutant, max 60 caractères.",
-            "Post Instagram complet : storytelling court, chaleureux, vendeur, hashtags à la fin.",
+            "Post Instagram complet : storytelling court, chaleureux, vendeur, hashtags à la fin. Si une information complémentaire de l'agent est fournie, l'intègre corrigée dans le texte, avant les hashtags.",
             "environ 4 à 6 passages, couvrant le titre, les 2-3 données chiffrées les plus importantes et les hashtags"
           ),
           tiktok: platformSchema(
             "Légende très courte façon accroche vidéo, max 60 caractères.",
-            "Légende TikTok complète : phrases très courtes, ton dynamique, hashtags à la fin.",
+            "Légende TikTok complète : phrases très courtes, ton dynamique, hashtags à la fin. Si une information complémentaire de l'agent est fournie, l'intègre corrigée dans le texte, avant les hashtags.",
             "environ 3 à 5 passages, couvrant l'accroche, la donnée chiffrée clé et les hashtags"
           ),
           facebook: platformSchema(
             "Titre/accroche conviviale, max 65 caractères.",
-            "Post Facebook complet : ton local et convivial, orienté partage.",
+            "Post Facebook complet : ton local et convivial, orienté partage. Si une information complémentaire de l'agent est fournie, l'intègre corrigée dans le texte, avant l'appel au partage.",
             "environ 4 à 6 passages, couvrant le titre, les données chiffrées clés et l'appel au partage"
           ),
           leboncoin: platformSchema(
             "Titre factuel : [Type] à vendre [Ville] [surface] m² – [X] chambres avec [atout clé], max 90 caractères.",
-            "Annonce Web longue et structurée (DESCRIPTION DU BIEN en 2 paragraphes / EQUIPEMENTS ET ANNEXES / ENVIRONNEMENT ET PROXIMITES / INFORMATIONS FINANCIERES avec sauts de ligne \\n\\n entre sections), aucun emoji, sections vides omises. Suit précisément la structure donnée dans le system prompt. Si une information complémentaire de l'agent est fournie, l'ajoute corrigée en tout dernier paragraphe, après la phrase de clôture.",
+            "Annonce Web longue et structurée (DESCRIPTION DU BIEN en 2 paragraphes / EQUIPEMENTS ET ANNEXES / ENVIRONNEMENT ET PROXIMITES / INFORMATIONS FINANCIERES avec sauts de ligne \\n\\n entre sections), aucun emoji, sections vides omises. Suit précisément la structure donnée dans le system prompt. Si une information complémentaire de l'agent est fournie, l'ajoute corrigée dans un paragraphe à part, juste après les 2 paragraphes de DESCRIPTION DU BIEN et juste avant le titre EQUIPEMENTS ET ANNEXES.",
             "environ 8 à 12 passages : CHAQUE titre de section en majuscules + les données les plus importantes (surface, ville, prix, 2-3 équipements clés) + les tournures clés des 2 paragraphes de description. Ne surligne pas chaque ligne individuellement si le bien a beaucoup de données fournies — priorise les plus déterminantes."
           ),
         },
@@ -362,8 +372,9 @@ function buildUserMessage(input: AnalysisInput, analysis: MarketAnalysis): strin
   if (input.additionalInfo) {
     lines.push(
       "",
-      "Information complémentaire dictée par l'agent (à corriger et intégrer en dernier paragraphe de la " +
-        "description Web uniquement, voir consignes) :",
+      "Information complémentaire dictée par l'agent (à corriger et intégrer dans les QUATRE annonces : juste " +
+        "avant EQUIPEMENTS ET ANNEXES sur la description Web, et dans le texte d'Instagram, TikTok et " +
+        "Facebook, voir consignes) :",
       input.additionalInfo
     );
   }

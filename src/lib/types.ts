@@ -70,8 +70,9 @@ export interface AnalysisInput extends PropertyDetails {
   surface: number;
   userPrice: number;
   /**
-   * Note libre dictée par l'agent, intégrée telle quelle (orthographe et
-   * grammaire corrigées) en dernier paragraphe de la description Web.
+   * Note libre dictée par l'agent, intégrée (orthographe et grammaire
+   * corrigées) dans les quatre annonces : juste avant « Équipements et
+   * annexes » sur la description Web, et dans Instagram, TikTok et Facebook.
    */
   additionalInfo?: string;
 }
