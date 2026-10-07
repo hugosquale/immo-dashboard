@@ -87,7 +87,14 @@ function validateInput(body: unknown): AnalysisInput | null {
   if (!Number.isFinite(surface) || surface <= 0 || surface > 5000) return null;
   if (!Number.isFinite(userPrice) || userPrice <= 0 || userPrice > 100_000_000) return null;
 
-  return { city, propertyType, surface, userPrice, ...parseDetails(b) };
+  return {
+    city,
+    propertyType,
+    surface,
+    userPrice,
+    additionalInfo: optStr(b.additionalInfo, 1500),
+    ...parseDetails(b),
+  };
 }
 
 export async function POST(request: NextRequest) {

@@ -114,6 +114,14 @@ TON PAR PLATEFORME :
   Termine toujours par : "[Type de bien] à vendre à [Ville] - un bien rare sur le secteur, à découvrir sans
   tarder. Contactez-nous pour organiser une visite."
 
+  Si le message utilisateur fournit une "Information complémentaire dictée par l'agent", ajoute-la TOUJOURS comme
+  tout dernier paragraphe de cette description Web, après la phrase de clôture ci-dessus, séparée par un saut de
+  ligne "\\n\\n". Reprends fidèlement son contenu et son sens (n'invente rien de plus, ne retire aucune
+  information qu'elle contient) mais corrige l'orthographe, la grammaire, la ponctuation et les majuscules si
+  besoin, en français normal et fluide, dans le même ton factuel et sans emoji que le reste de cette annonce Web.
+  N'ajoute ce paragraphe QUE sur la description Web (Le Bon Coin) — jamais sur Instagram, TikTok ou Facebook. Si
+  cette information n'est pas fournie, n'ajoute aucun paragraphe supplémentaire.
+
 Réponds uniquement en français.`;
 
 function highlightSchema(countHint: string) {
@@ -264,7 +272,7 @@ const TOOL_SCHEMA = {
           ),
           leboncoin: platformSchema(
             "Titre factuel : [Type] à vendre [Ville] [surface] m² – [X] chambres avec [atout clé], max 90 caractères.",
-            "Annonce Web longue et structurée (DESCRIPTION DU BIEN en 2 paragraphes / EQUIPEMENTS ET ANNEXES / ENVIRONNEMENT ET PROXIMITES / INFORMATIONS FINANCIERES avec sauts de ligne \\n\\n entre sections), aucun emoji, sections vides omises. Suit précisément la structure donnée dans le system prompt.",
+            "Annonce Web longue et structurée (DESCRIPTION DU BIEN en 2 paragraphes / EQUIPEMENTS ET ANNEXES / ENVIRONNEMENT ET PROXIMITES / INFORMATIONS FINANCIERES avec sauts de ligne \\n\\n entre sections), aucun emoji, sections vides omises. Suit précisément la structure donnée dans le system prompt. Si une information complémentaire de l'agent est fournie, l'ajoute corrigée en tout dernier paragraphe, après la phrase de clôture.",
             "environ 8 à 12 passages : CHAQUE titre de section en majuscules + les données les plus importantes (surface, ville, prix, 2-3 équipements clés) + les tournures clés des 2 paragraphes de description. Ne surligne pas chaque ligne individuellement si le bien a beaucoup de données fournies — priorise les plus déterminantes."
           ),
         },
@@ -349,6 +357,15 @@ function buildUserMessage(input: AnalysisInput, analysis: MarketAnalysis): strin
   const detailLines = buildDetailLines(input);
   if (detailLines.length > 0) {
     lines.push("", "Caractéristiques du bien renseignées par l'agent (utilise-les si pertinent) :", ...detailLines);
+  }
+
+  if (input.additionalInfo) {
+    lines.push(
+      "",
+      "Information complémentaire dictée par l'agent (à corriger et intégrer en dernier paragraphe de la " +
+        "description Web uniquement, voir consignes) :",
+      input.additionalInfo
+    );
   }
 
   lines.push("", "Rédige uniquement via l'outil submit_analysis.");

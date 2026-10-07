@@ -69,6 +69,11 @@ export interface AnalysisInput extends PropertyDetails {
   propertyType: PropertyType;
   surface: number;
   userPrice: number;
+  /**
+   * Note libre dictée par l'agent, intégrée telle quelle (orthographe et
+   * grammaire corrigées) en dernier paragraphe de la description Web.
+   */
+  additionalInfo?: string;
 }
 
 export interface MarketAnalysis {

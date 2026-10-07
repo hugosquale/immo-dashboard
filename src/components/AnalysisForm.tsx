@@ -160,6 +160,7 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
   const [propertyType, setPropertyType] = useState<PropertyType>(initialInput?.propertyType ?? "appartement");
   const [surface, setSurface] = useState(initialInput ? String(initialInput.surface) : "");
   const [userPrice, setUserPrice] = useState(initialInput ? String(initialInput.userPrice) : "");
+  const [additionalInfo, setAdditionalInfo] = useState(initialInput?.additionalInfo ?? "");
   const [touched, setTouched] = useState(false);
   const [details, setDetails] = useState<DetailsState>(() =>
     initialInput ? detailsFromInput(initialInput) : initialDetails
@@ -181,6 +182,7 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
     setPropertyType("appartement");
     setSurface("");
     setUserPrice("");
+    setAdditionalInfo("");
     setTouched(false);
     setDetails(initialDetails);
   }
@@ -265,6 +267,8 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
       quiet: details.quiet,
       recentlyRenovated: details.recentlyRenovated,
       fiber: details.fiber,
+
+      additionalInfo: toStr(additionalInfo),
     });
   }
 
@@ -459,6 +463,21 @@ export default function AnalysisForm({ onAnalyze, isLoading, initialInput, error
           <BoolToggle label="Récemment rénové" value={details.recentlyRenovated} onChange={(v) => update("recentlyRenovated", v)} />
           <BoolToggle label="Fibre optique" value={details.fiber} onChange={(v) => update("fiber", v)} />
         </AccordionSection>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="additionalInfo" className="text-xs font-medium text-[var(--muted)]">
+          Informations complémentaires à rajouter aux besoins (Ceci apparaîtra au deuxième paragraphe)
+        </label>
+        <textarea
+          id="additionalInfo"
+          rows={4}
+          maxLength={1500}
+          placeholder="Ex : Le vendeur souhaite une vente rapide, idéalement avant la fin de l'année…"
+          value={additionalInfo}
+          onChange={(e) => setAdditionalInfo(e.target.value)}
+          className="w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted-2)] focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[var(--accent-blue-soft)]"
+        />
       </div>
 
       <div className="mt-2 flex gap-2">
