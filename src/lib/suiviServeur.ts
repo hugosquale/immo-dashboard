@@ -9,6 +9,7 @@
 
 import { FICHES } from "./recommandations";
 import { cleIdentite, rapprocher, type Connu } from "./identite";
+import { estEquipeInterne } from "./equipeInterne";
 import {
   ONGLET_UTILISATEURS,
   ONGLET_JOURNAL,
@@ -179,6 +180,27 @@ async function journal(
 
 /** Connexion : rapproche d'un utilisateur connu, ou en crée un. */
 export async function connecter(prenom: string, nom: string): Promise<{ utilisateur: Utilisateur; rapproche: boolean }> {
+  const cleDirecte = cleIdentite(prenom, nom);
+
+  // équipe interne : accès normal, mais aucune trace conservée nulle part
+  // (ni Sheets, ni mémoire, ni journal) — pas un·e client·e soumis·e à la
+  // garantie de lecture
+  if (estEquipeInterne(cleDirecte)) {
+    const maintenant = new Date().toISOString();
+    return {
+      utilisateur: {
+        cle: cleDirecte,
+        prenom: prenom.trim(),
+        nom: nom.trim(),
+        premiere: maintenant,
+        derniere: maintenant,
+        connexions: 1,
+        progression: Object.fromEntries(PAGES.map((c) => [c, 0])),
+      },
+      rapproche: false,
+    };
+  }
+
   const tous = await charger();
   const connus: Connu[] = [...tous.values()].map(({ u }) => ({ cle: u.cle, prenom: u.prenom, nom: u.nom }));
 
@@ -212,6 +234,22 @@ export async function connecter(prenom: string, nom: string): Promise<{ utilisat
 export async function progresser(cle: string, page: string, pourcentage: number): Promise<Utilisateur | null> {
   if (!PAGES.includes(page)) return null;
 
+  // équipe interne : rien n'est jamais stocké, donc rien à chercher ni à
+  // écrire — on renvoie un état neutre, ignoré par le client de toute façon
+  if (estEquipeInterne(cle)) {
+    const maintenant = new Date().toISOString();
+    const valeur = Math.min(100, Math.max(0, Math.round(pourcentage)));
+    return {
+      cle,
+      prenom: "",
+      nom: "",
+      premiere: maintenant,
+      derniere: maintenant,
+      connexions: 1,
+      progression: Object.fromEntries(PAGES.map((c) => [c, c === page ? valeur : 0])),
+    };
+  }
+
   const tous = await charger();
   const entree = tous.get(cle);
   if (!entree) return null;
@@ -241,7 +279,10 @@ export async function listerUtilisateurs(): Promise<{
 }> {
   const tous = await charger();
   return {
-    utilisateurs: [...tous.values()].map(({ u }) => u),
+    // filtre de sécurité : l'équipe interne n'est normalement jamais écrite
+    // nulle part, mais on l'exclut aussi ici au cas où une ligne antérieure
+    // à cette règle traînerait encore dans le Sheet ou la mémoire
+    utilisateurs: [...tous.values()].filter(({ u }) => !estEquipeInterne(u.cle)).map(({ u }) => u),
     source: sheetsConfigure() ? "sheets" : "memoire",
   };
 }
