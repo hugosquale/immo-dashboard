@@ -29,6 +29,10 @@ const ChecklistIcon: ReactNode = (
   </>
 );
 
+const BoltIcon: ReactNode = (
+  <path d="M13 2 5 13.5h5l-1 8.5 8-14h-5l1-6Z" fill="currentColor" stroke="none" strokeLinejoin="round" />
+);
+
 interface Carte {
   cle: string;
   titre: string;
@@ -58,6 +62,13 @@ const CARTES: Carte[] = [
     accroche: "Le guide de l'agent : appel, discours, rendez-vous, conformité.",
     icone: ChecklistIcon,
     grad: "linear-gradient(145deg, #a4aebd 0%, #616c7c 45%, #333b46 100%)",
+  },
+  {
+    cle: "recharge",
+    titre: "Recharger mes coups d'énergie",
+    accroche: "Besoin de plus de puissance IA ? Faites le plein.",
+    icone: BoltIcon,
+    grad: "linear-gradient(145deg, #ffcf5c 0%, #f5a623 45%, #c6730a 100%)",
   },
 ];
 
@@ -102,7 +113,7 @@ function CarteCategorie({ carte, onClick, delai }: { carte: Carte; onClick: () =
 export default function HomeScreen({ onNavigate }: { onNavigate: (volet: string) => void }) {
   return (
     <div className="tech-grid relative flex min-h-full flex-1 flex-col items-center justify-center overflow-hidden px-4 py-10 sm:px-8">
-      <div className="relative flex w-full max-w-4xl flex-col items-center">
+      <div className="relative flex w-full max-w-3xl flex-col items-center">
         <header className="animate-fade-in-up mb-10 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent-blue)]">
             Squale Assistant
@@ -112,7 +123,7 @@ export default function HomeScreen({ onNavigate }: { onNavigate: (volet: string)
           </h1>
         </header>
 
-        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
           {CARTES.map((carte, i) => (
             <CarteCategorie key={carte.cle} carte={carte} onClick={() => onNavigate(carte.cle)} delai={0.06 * i} />
           ))}

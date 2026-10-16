@@ -10,6 +10,7 @@ import RecoPage from "@/components/RecoPage";
 import HomeScreen from "@/components/HomeScreen";
 import RecommandationsMenu from "@/components/RecommandationsMenu";
 import AdminPage from "@/components/AdminPage";
+import RechargePage from "@/components/RechargePage";
 import { FICHES } from "@/lib/recommandations";
 import SuiviProvider, { useSuivi } from "@/components/SuiviProvider";
 import LoginGate from "@/components/LoginGate";
@@ -184,6 +185,7 @@ function Application() {
         )}
         {volet === "vendeurs" && <SellersPanel />}
         {volet === "admin" && <AdminPage />}
+        {volet === "recharge" && <RechargePage />}
 
         {FICHES.map((f) => volet === f.cle && <RecoPage key={f.cle} fiche={f} />)}
 
