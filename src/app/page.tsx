@@ -11,6 +11,7 @@ import HomeScreen from "@/components/HomeScreen";
 import RecommandationsMenu from "@/components/RecommandationsMenu";
 import AdminPage from "@/components/AdminPage";
 import RechargePage from "@/components/RechargePage";
+import SellersDetailPage from "@/components/SellersDetailPage";
 import { FICHES } from "@/lib/recommandations";
 import SuiviProvider, { useSuivi } from "@/components/SuiviProvider";
 import LoginGate from "@/components/LoginGate";
@@ -183,7 +184,8 @@ function Application() {
         {volet === "recommandations" && (
           <RecommandationsMenu progression={utilisateur.progression} onNavigate={setVolet} />
         )}
-        {volet === "vendeurs" && <SellersPanel />}
+        {volet === "vendeurs" && <SellersPanel onVoirPlus={() => setVolet("vendeurs-detail")} />}
+        {volet === "vendeurs-detail" && <SellersDetailPage />}
         {volet === "admin" && <AdminPage />}
         {volet === "recharge" && <RechargePage />}
 

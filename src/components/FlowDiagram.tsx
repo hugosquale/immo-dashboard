@@ -58,6 +58,8 @@ export interface FlowDiagramProps {
   titreAccent: string;
   steps: Step[];
   phone: { titre: string; label: string; items: FeedItem[]; glyphe?: "profil" | "bien" };
+  /** Affiche un bouton flottant "Voir plus" en bas de l'écran, s'il est fourni. */
+  onVoirPlus?: () => void;
 }
 
 const nodeX = (i: number) => FIRST_X + i * STEP_X;
@@ -161,7 +163,7 @@ function StepBadges({ step, i }: { step: Step; i: number }) {
   );
 }
 
-export default function FlowDiagram({ titreDebut, titreAccent, steps, phone }: FlowDiagramProps) {
+export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, onVoirPlus }: FlowDiagramProps) {
   return (
     <div className="tech-grid relative flex h-full min-h-0 flex-1 flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-8">
       <div className="animate-fade-in-up relative flex h-full w-full max-w-[1400px] items-center justify-center">
@@ -256,6 +258,19 @@ export default function FlowDiagram({ titreDebut, titreAccent, steps, phone }: F
           <PhoneFeed titre={phone.titre} label={phone.label} items={phone.items} glyphe={phone.glyphe} />
         </svg>
       </div>
+
+      {onVoirPlus && (
+        <button
+          type="button"
+          onClick={onVoirPlus}
+          className="btn-primary fixed bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full px-6 py-3 text-sm font-bold shadow-xl"
+        >
+          Voir plus
+          <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 6.5 8 10.5 12 6.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
