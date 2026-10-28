@@ -58,8 +58,8 @@ export interface FlowDiagramProps {
   titreAccent: string;
   steps: Step[];
   phone: { titre: string; label: string; items: FeedItem[]; glyphe?: "profil" | "bien" };
-  /** Affiche un bouton flottant "Voir plus" en bas de l'écran, s'il est fourni. */
-  onVoirPlus?: () => void;
+  /** Affiche un repère "Voir plus" en bas du schéma, invitant à poursuivre le défilement. */
+  suite?: boolean;
 }
 
 const nodeX = (i: number) => FIRST_X + i * STEP_X;
@@ -163,10 +163,10 @@ function StepBadges({ step, i }: { step: Step; i: number }) {
   );
 }
 
-export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, onVoirPlus }: FlowDiagramProps) {
+export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, suite }: FlowDiagramProps) {
   return (
-    <div className="tech-grid relative flex h-full min-h-0 flex-1 flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-8">
-      <div className="animate-fade-in-up relative flex h-full w-full max-w-[1400px] items-center justify-center">
+    <div className="tech-grid relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-6 sm:px-8">
+      <div className="animate-fade-in-up relative flex w-full max-w-[1400px] flex-1 items-center justify-center">
         <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="h-full w-full" role="img">
           <title>{`${titreDebut} ${titreAccent}`}</title>
 
@@ -259,17 +259,13 @@ export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, onV
         </svg>
       </div>
 
-      {onVoirPlus && (
-        <button
-          type="button"
-          onClick={onVoirPlus}
-          className="btn-primary fixed bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full px-6 py-3 text-sm font-bold shadow-xl"
-        >
-          Voir plus
-          <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+      {suite && (
+        <div className="relative z-10 mt-4 flex flex-col items-center gap-1 text-[var(--muted)]">
+          <span className="text-xs font-semibold uppercase tracking-wide">Voir plus</span>
+          <svg viewBox="0 0 16 16" className="h-4 w-4 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M4 6.5 8 10.5 12 6.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </button>
+        </div>
       )}
     </div>
   );

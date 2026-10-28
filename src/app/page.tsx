@@ -21,9 +21,6 @@ import type { AnalysisInput, AnalysisResult } from "@/lib/types";
 
 type Volet = string;
 
-/** Volets affichés sur une seule page, sans défilement. */
-const PLEIN_ECRAN = new Set(["vendeurs"]);
-
 function Application() {
   const [result, setResult] = useState<AnalysisResult | null>(EXAMPLE_RESULT);
   const [isLoading, setIsLoading] = useState(false);
@@ -118,11 +115,7 @@ function Application() {
   if (!utilisateur) return <LoginGate />;
 
   return (
-    <div
-      className={`flex w-full flex-col ${
-        PLEIN_ECRAN.has(volet) ? "h-screen overflow-hidden" : "min-h-screen"
-      }`}
-    >
+    <div className="flex w-full min-h-screen flex-col">
       {volet === "analyse" ? (
         <div
           aria-hidden
@@ -184,8 +177,12 @@ function Application() {
         {volet === "recommandations" && (
           <RecommandationsMenu progression={utilisateur.progression} onNavigate={setVolet} />
         )}
-        {volet === "vendeurs" && <SellersPanel onVoirPlus={() => setVolet("vendeurs-detail")} />}
-        {volet === "vendeurs-detail" && <SellersDetailPage />}
+        {volet === "vendeurs" && (
+          <>
+            <SellersPanel />
+            <SellersDetailPage />
+          </>
+        )}
         {volet === "admin" && <AdminPage />}
         {volet === "recharge" && <RechargePage />}
 

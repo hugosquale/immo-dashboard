@@ -58,14 +58,14 @@ const ACHETEURS: FeedItem[] = [
   { nom: "Paul Rivière", souhait: "Maison 130 m² · 340 000 € · prêt validé", etat: "valide" },
 ];
 
-export default function SellersPanel({ onVoirPlus }: { onVoirPlus?: () => void } = {}) {
+export default function SellersPanel() {
   return (
     <FlowDiagram
       titreDebut="Les bons acheteurs"
       titreAccent="trouvés grâce à notre IA"
       steps={STEPS}
       phone={{ titre: "Nouveaux acheteurs", label: "NOUVEL ACHETEUR QUALIFIÉ", items: ACHETEURS }}
-      onVoirPlus={onVoirPlus}
+      suite
     />
   );
 }

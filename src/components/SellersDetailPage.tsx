@@ -12,7 +12,7 @@ const SLIDES = [
 
 export default function SellersDetailPage() {
   return (
-    <div className="tech-grid relative min-h-full flex-1">
+    <div className="tech-grid relative">
       <div className="relative mx-auto flex w-full max-w-4xl flex-col gap-8 px-5 py-12 sm:px-8 sm:py-16">
         {SLIDES.map((slide, i) => (
           <div
