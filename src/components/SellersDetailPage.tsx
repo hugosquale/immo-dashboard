@@ -12,8 +12,8 @@ const SLIDES = [
 
 export default function SellersDetailPage() {
   return (
-    <div className="tech-grid relative">
-      <div className="relative mx-auto flex w-full max-w-4xl flex-col gap-8 px-5 py-12 sm:px-8 sm:py-16">
+    <div className="tech-grid relative -mt-16">
+      <div className="relative mx-auto flex w-full max-w-[1344px] flex-col gap-8 px-5 pt-2 pb-12 sm:px-8 sm:pb-16">
         {SLIDES.map((slide, i) => (
           <div
             key={slide.src}

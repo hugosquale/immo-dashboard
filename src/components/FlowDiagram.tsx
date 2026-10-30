@@ -165,7 +165,7 @@ function StepBadges({ step, i }: { step: Step; i: number }) {
 
 export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, suite }: FlowDiagramProps) {
   return (
-    <div className="tech-grid relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-6 sm:px-8">
+    <div className="tech-grid relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-3 sm:px-8">
       <div className="animate-fade-in-up relative flex w-full max-w-[1400px] flex-1 items-center justify-center">
         <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="h-full w-full" role="img">
           <title>{`${titreDebut} ${titreAccent}`}</title>
@@ -260,7 +260,7 @@ export default function FlowDiagram({ titreDebut, titreAccent, steps, phone, sui
       </div>
 
       {suite && (
-        <div className="relative z-10 mt-4 flex flex-col items-center gap-1 text-[var(--muted)]">
+        <div className="relative z-10 mt-1 flex flex-col items-center gap-1 text-[var(--muted)]">
           <span className="text-xs font-semibold uppercase tracking-wide">Voir plus</span>
           <svg viewBox="0 0 16 16" className="h-4 w-4 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M4 6.5 8 10.5 12 6.5" strokeLinecap="round" strokeLinejoin="round" />
